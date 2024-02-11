@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<modDesc descVersion="77" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/NMC-TBone/xml-schema/main/modDesc.xsd">
+    <author>Open Modding Alliance</author>
+    <version>1.0.0.0</version>
+    <title>
+        <en>FS Build Sample Mod</en>
+    </title>
+    <description>
+        <en><![CDATA[ DO NOT FORGET A DESCRIPTION - CHANGE THIS! ]]></en>
+    </description>
+    <iconFilename></iconFilename>
+    <multiplayer supported="true" />
+    <extraSourceFiles>
+    </extraSourceFiles>
+</modDesc>
