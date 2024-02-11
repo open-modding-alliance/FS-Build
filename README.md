@@ -10,8 +10,51 @@ Automizes the process of creating zip archives for your mod with QoL features as
 * Supports having "[DEV]" and "[TEST]" prefix in mod title to distinguish between versions
 * Copy zip archive to a second mod folder (e.g. a network share) for multiplayer testing
 
+## INSTALLATION
+Currently, this tool only works on _Windows 10_ and above. 
 
-## Version auto-increment
+### Automatic Installation
+
+TBD
+
+### Manual Installation
+
+1. Download latest release
+2. Unzip the archive in the root folder for your mod project
+3. Create the "fsproj.json" file using either of these options
+   - Create a new file manually (see configuration section for details)
+   - Automatically generate the file via the `fsbuild init` command
+   - Copy the template `fsproj_template.json` from the `.\fsbuild\` folder
+
+## HOW TO USE _FS BUILD_
+When you have configured FS Build, see section below for details about configuration, you can start using the tool. 
+
+How you execute the tool depends on which terminal you are using:
+- **VS Code** (the integrated PowerShell terminal): `.\fsbuild init`
+- **Windows PowerShell**: `PS> .\fsbuild init`
+- **Command Prompt**: `fsbuild init`
+- **Command Prompt** (alternative): `powershell .\fsbuild init`
+
+
+**Main commands:**
+
+- _(w.i.p)_ `run` Starts Farming Simulator and automatically loads a pre-defined savegame. 
+- `build` Creates a simple zip archive using the general build settings. Can automatically bump the build revision number.
+- _(w.i.p)_ `release` Creates a ModHub ready zip archive using both the general build settings as well as the release specific settings. The `release` command also executes TestRunner if installed and configured properly.
+
+**Other commands:**
+- _(w.i.p)_ `init` This command is used to setup the tool for a new project. You should only run this once.
+- _(planned feature)_ `build mp` Creates a zip archive using specific settings for multiplayer testing. Otherwise works the same as the regular `build` command.
+- _(planned feature)_ `update` Automatic update of the FS Build script.
+
+
+
+
+## CONFIGURATION
+To enable the `fsbuild` command you need a `fsproj.json` file in the root of your mod project folder. You can manually create this file or you can run the command `fsbuild init` to have it automatically generated.
+
+
+### Version auto-increment
 
 ```json
 "versionBump": {
@@ -20,7 +63,7 @@ Automizes the process of creating zip archives for your mod with QoL features as
 },
 ```
 
-The `increaseOnBuild` option has the possible values `never` and `always`. Value `always` will incremement the build number (i.e. +0.0.0.1). 
+The `increaseOnBuild` option has the possible values `never` and `always`. Value `always` will incremement the build revision number (i.e. `+0.0.0.1`). 
 
 Option `increaseOnRelease` has the following possible values:
 * `never` No automatic increase
@@ -29,8 +72,25 @@ Option `increaseOnRelease` has the following possible values:
 * `patch` Increases patch version (i.e. `+0.0.1.0`) - typically for hotfixes and patches
 * `ask` Ask the user what do to (possible actions are "no increment", "major", "minor" and "patch")
 
-`N.B.: build version is always 0 on release builds, e.g "1.0.0.2" becomes "1.0.0.0" on release`
+> N.B.: build revision number is always 0 on release builds, e.g "1.0.0.2" becomes "1.0.0.0" on release.
 
+
+### Minimal recommended "fsproj.json" config file
+
+```json
+{
+    "version": {
+        "increaseOnBuild": "build",
+        "increaseOnRelease": "ask"
+    },
+    "buildBlacklist": [
+    ],
+    "releaseBlacklist": [
+        "scripts/scriptLibrary/utils/DebugHelper.lua",
+        "scriptLibrary/utils/DebugHelper.lua"
+    ],
+}
+```
 
 
 ## License
