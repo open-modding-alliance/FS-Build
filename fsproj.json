@@ -6,11 +6,6 @@
         "devVersionSuffix": "-dev",
         "increaseOnRelease": "ask"
     },
-    "description": "fsproj",
-    "main": "fsproj.js",
-    "scripts": {
-        "start": "node fsproj.js"
-    },
     "buildBlacklist": [
         "fsbuild.ps1",
         "fsproj.json",
