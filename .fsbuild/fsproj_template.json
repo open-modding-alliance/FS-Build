@@ -1,0 +1,24 @@
+{
+    "version": {
+        "increaseOnBuild": "always",
+        "devVersionSuffix": "-dev",
+        "increaseOnRelease": "ask"
+    },
+    "buildBlacklist": [
+        "*.json",
+        ".deploy/*",
+        ".fsbuild/*",
+        ".gitignore",
+        "*.zip",
+        "*.psd",
+        "*.pdn"
+    ],
+    "releaseBlacklist": [
+        "scripts/scriptLibrary/utils/DebugHelper.lua",
+        "scriptLibrary/utils/DebugHelper.lua",
+        "*.md"
+    ],
+    "gameDirectory": "C:/Program Files (x86)/Steam/steamapps/common/Farming Simulator 2022",
+    "testRunnerPath": "",
+    "savegameIndex": 1
+}
