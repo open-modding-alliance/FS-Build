@@ -1,0 +1,27 @@
+{
+    "name": "FS_Script_Library",
+    "displayName": "FS Script Library",
+    "version": {
+        "increaseOnBuild": "build",
+        "devVersionSuffix": "-dev",
+        "increaseOnRelease": "ask"
+    },
+    "description": "fsproj",
+    "main": "fsproj.js",
+    "scripts": {
+        "start": "node fsproj.js"
+    },
+    "buildBlacklist": [
+        "fsbuild.ps1",
+        "fsproj.json",
+        "*.json",
+        ".deploy/*",
+        ".fsbuild/*"
+    ],
+    "releaseBlacklist": [
+        "scripts/scriptLibrary/utils/DebugHelper.lua",
+        "scriptLibrary/utils/DebugHelper.lua"
+    ],
+    "gameDirectory": "",
+    "savegameIndex": 2
+}
