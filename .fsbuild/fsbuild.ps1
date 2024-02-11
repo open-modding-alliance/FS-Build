@@ -76,12 +76,13 @@ function CommandRun {
         [string[]]$parameters
     )
 
+    ShowNotImplemented -text $MyInvocation.MyCommand.ToString()
 
-    Write-Host "RUN COMMAND: $parameters"
+    # Write-Host "RUN COMMAND: $parameters"
 
-    foreach ($param in $parameters) {
-        Write-Host "Run Param: $param"
-    }
+    # foreach ($param in $parameters) {
+    #     Write-Host "Run Param: $param"
+    # }
     
 }
 
@@ -114,7 +115,6 @@ function CommandVersion {
     SuccessAndExit -Text $VERSION
 }
 
-
 function CommandBuild {
 
     BumpVersion $false $true
@@ -129,7 +129,7 @@ function CommandBuild {
 function CommandRelease {
     $outputFilename = CreateArchive $true
 
-
+    #TODO: add testrunner
 
     if(Test-Path $outputFilename){
         SuccessAndExit -Text "Successfully created archive: $outputFilename"
@@ -147,7 +147,7 @@ function ShowError {
 function ShowHeader {
 
 
-    Write-Host "`nFS Build Tool v$SCRIPT_VERSION - Created by w33zl (Open Modding Alliance)`n"
+    Write-Host "`nFS Build Tool v$SCRIPT_VERSION - Created by Open Modding Alliance (w33zl)`n"
 }
 
 function ShowWarning {
@@ -255,6 +255,25 @@ function BumpVersion {
         if(-not ($xml.modDesc.version -eq $null) ) {
             Write-Host "Current version: $versionString"
         }
+
+        
+        if ($versionString -match '^[0-9.]+$') {
+            # String contains only numbers and dots
+
+            try {
+                $versionParts = $versionString.Split('.')
+                $incrementedParts = $versionParts | ForEach-Object { [int]$_ + 1 }
+            }
+            catch {
+                ShowWarning -text "Invalid version number string '$versionString', automatic version increment is disabled."
+            }
+        
+            $incrementedVersionString = $incrementedParts -join '.'
+        
+            Write-Host "Inc version: $incrementedVersionString"
+        } else {
+            ShowWarning -text "Invalid version number string '$versionString', automatic version increment is disabled."    
+        }
     }
 
     # # Load the XML file
@@ -265,26 +284,9 @@ function BumpVersion {
     # $xml.modDesc.version = "2.0"
     # $xml.modDesc.description = "New description for the mod"
 
-    $versionString = "1.0-beta"
+    # $versionString = "1.0-beta"
     # $versionString = $versionString -replace "-beta", ""
 
-    if ($versionString -match '^[0-9.]+$') {
-        # String contains only numbers and dots
-
-        try {
-            $versionParts = $versionString.Split('.')
-            $incrementedParts = $versionParts | ForEach-Object { [int]$_ + 1 }
-        }
-        catch {
-            ShowWarning -text "Invalid version number string '$versionString', automatic version increment is disabled."
-        }
-    
-        $incrementedVersionString = $incrementedParts -join '.'
-    
-        Write-Host "Inc version: $incrementedVersionString"
-    } else {
-        ShowWarning -text "Invalid version number string '$versionString', automatic version increment is disabled."    
-    }
 
     # $choice = Read-Host "Choose an option (A or B)"
 # if ($choice -eq "A") {
@@ -399,6 +401,11 @@ function CreateArchive {
             $archive.Dispose()
         }
     }
+
+    #TODO: add support for cleaning up mod (en) title, i.e. update title in modDesc.xml
+
+    
+
 
     # Compress-Archive -Path $filesToInclude.FullName -DestinationPath $destinationZip -Update -CompressionLevel $compressionLevel
     
